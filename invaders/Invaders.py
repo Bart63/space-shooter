@@ -1,7 +1,7 @@
 import pygame
 
 class Invaders:
-    def __init__(self, x, y, movement_speed, collision_damage, image, health=100):
+    def __init__(self, x, y,  image, movement_speed=1, collision_damage=1, health=100):
         self.x=x
         self.y=y
         self.health=health

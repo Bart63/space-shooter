@@ -24,7 +24,7 @@ class GameManager:
         pygame.display.update()
 
     def main(self):
-        SHIP = Ship(1, 0, 100, 100, 5, 2, self.SHIP_IMG_PATH)
+        SHIP = Ship(200, 200, self.SHIP_IMG_PATH)
         self.run = True
         clock = pygame.time.Clock()
         while self.run:
