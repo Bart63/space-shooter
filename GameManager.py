@@ -5,6 +5,8 @@ from Ship import Ship
 from Enemy import Enemy
 import pygame
 
+RED = (255, 255, 0)
+
 class GameManager:
     WIDTH, HEIGHT = 700, 700
     WIN = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -19,15 +21,28 @@ class GameManager:
     def __init__(self):
         self.SHIP = Ship(200, 200, self.SHIP_IMG_PATH)
         self.run = True
+        self.ship_bullets = []
 
     def check_events(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.run = False
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                    bullet = pygame.Rect(int(self.SHIP.x + self.SHIP.width/2), self.SHIP.y-10, 5, 5)
+                    self.ship_bullets.append(bullet)
+
+    def handle_bullets(self):
+        for i, bullet in enumerate(self.ship_bullets):
+            bullet.y -= 1
+            if(int(bullet.y-bullet.width/2)<0):
+                del self.ship_bullets[i]
 
     def draw(self):
         self.WIN.blit(self.BG_IMG, (0, 0))
         self.WIN.blit(self.SHIP.img, (self.SHIP.x, self.SHIP.y))
+        for bullet in self.ship_bullets:
+            pygame.draw.rect(self.WIN, RED, bullet)
         pygame.display.update()
 
     def key_manager(self):
@@ -48,8 +63,9 @@ class GameManager:
         clock = pygame.time.Clock()
         while self.run:
             clock.tick(self.FPS)
-            self.check_events()
             self.key_manager()
+            self.check_events()
+            self.handle_bullets()
             self.draw()
         pygame.quit()
 
