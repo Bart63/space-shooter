@@ -2,6 +2,7 @@ import sys
 import os
 sys.path.insert(0, os.path.join('invaders'))
 from Ship import Ship
+from Enemy import Enemy
 import pygame
 
 class GameManager:
@@ -12,6 +13,8 @@ class GameManager:
     BG_IMG = pygame.image.load(os.path.join('imgs', 'background.png'))
     BG_IMG = pygame.transform.scale(BG_IMG, (WIDTH, HEIGHT))
     SHIP_IMG_PATH = os.path.join('imgs', 'gracz_new.png')
+    ENEMY_IMG_1 = os.path.join('imgs', 'enemy_new_1.png')
+    ENEMY_IMG_2 = os.path.join('imgs', 'enemy_new_2.png')
 
     def check_events(self):
         for event in pygame.event.get():

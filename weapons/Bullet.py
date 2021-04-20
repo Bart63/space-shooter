@@ -1,1 +1,1 @@
-import Weapon
+from Weapon import Weapon

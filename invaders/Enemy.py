@@ -1,4 +1,4 @@
-import Invaders
+from Invaders import Invaders
 
 class Enemy(Invaders):
     def __init__(self, x, y, image, movement_speed=1, collision_damage=1, health=100):

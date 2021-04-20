@@ -1,1 +1,1 @@
-import PowerUps
+from PowerUps import PowerUps
