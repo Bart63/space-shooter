@@ -1,4 +1,4 @@
-from Invaders import Invaders
+from Invaders.Invaders import Invaders
 
 class Ship(Invaders):
 

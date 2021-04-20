@@ -1,8 +1,6 @@
-import sys
 import os
-sys.path.insert(0, os.path.join('invaders'))
-from Ship import Ship
-from Enemy import Enemy
+from Invaders import Ship
+from Invaders import Enemy
 import pygame
 
 RED = (255, 255, 0)
