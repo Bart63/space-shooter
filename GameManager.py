@@ -2,7 +2,7 @@ import os
 from Invaders import Ship
 from Weapons import Bullet
 import pygame
-from EnemyList import ENEMY_LIST
+from EnemyList import EnemyGenerator
 import random
 
 RED = (255, 255, 0)
@@ -23,6 +23,7 @@ class GameManager:
         self.ship_bullets = []
         self.enemies = []
         self.previous_ticks = 0
+        self.EnemyGenerator = EnemyGenerator(self.WIDTH)
 
     def getDeltaTime(self):
         self.t = pygame.time.get_ticks()
@@ -30,7 +31,10 @@ class GameManager:
         self.previous_ticks = self.t
 
     def spawnEnemies(self):
-        if(len(ENEMY_LIST)==0):
+        ENEMY_LIST = self.EnemyGenerator.ENEMY_LIST
+        if len(ENEMY_LIST)==0:
+            if len(self.enemies)==0:
+                self.EnemyGenerator.populate_random()
             return
         time_to_spawn = ENEMY_LIST[0]['time']-self.deltaTime
         if(time_to_spawn<=0):
