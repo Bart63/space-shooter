@@ -49,6 +49,8 @@ class GameManager:
 
     def action(self):
         self.SHIP.action()
+        for e in self.enemies:
+            e.move((self.WIDTH, self.HEIGHT))
 
     def shooting_handle(self):
         for i, b in enumerate(self.SHIP.ship_bullets):
@@ -56,7 +58,6 @@ class GameManager:
                 if b.Rect.colliderect(e.Rect):
                     del self.SHIP.ship_bullets[i]
                     del self.enemies[j]
-
 
     def draw(self):
         self.WIN.blit(self.BG_IMG, (0, 0))
