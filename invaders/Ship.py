@@ -11,10 +11,6 @@ class Ship(Invaders):
     def getInput(self):
         pass
 
-    def move(self, right, down):
-        self.x+=right*self.movement_speed
-        self.y+=down*self.movement_speed
-
     def shoot(self):
         pass
 
