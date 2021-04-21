@@ -3,6 +3,7 @@ from Invaders import Ship
 from Weapons import Bullet
 import pygame
 from EnemyList import ENEMY_LIST
+import random
 
 RED = (255, 255, 0)
 
@@ -50,6 +51,11 @@ class GameManager:
     def action(self):
         self.SHIP.action()
         for e in self.enemies:
+            if(e.time_to_shoot<=0):
+                bullet = Bullet(int(e.x + e.width/2), e.y+e.height+10, self.BULLET_IMG, 6)
+                e.shoot(bullet)
+                e.time_to_shoot=random.randint(10, 100)*10
+            e.action(self.deltaTime)
             e.move((self.WIDTH, self.HEIGHT))
 
     def shooting_handle(self):
@@ -64,6 +70,8 @@ class GameManager:
         self.WIN.blit(self.SHIP.img, (self.SHIP.x, self.SHIP.y))
         for enemy in self.enemies:
             self.WIN.blit(enemy.img, (enemy.x, enemy.y))
+            for bullet in enemy.enemy_bullets:
+                self.WIN.blit(bullet.img, (bullet.x, bullet.y))
         for bullet in self.SHIP.ship_bullets:
             self.WIN.blit(bullet.img, (bullet.x, bullet.y))
         pygame.display.update()
