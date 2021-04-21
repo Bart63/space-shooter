@@ -2,6 +2,7 @@ import os
 from Invaders import Ship
 from Weapons import Bullet
 import pygame
+from EnemyList import ENEMY_LIST
 
 RED = (255, 255, 0)
 
@@ -20,6 +21,23 @@ class GameManager:
         self.run = True
         self.ship_bullets = []
         self.enemies = []
+        self.previous_ticks = 0
+
+    def getDeltaTime(self):
+        self.t = pygame.time.get_ticks()
+        self.deltaTime = (self.t-self.previous_ticks)
+        self.previous_ticks = self.t
+
+    def spawnEnemies(self):
+        if(len(ENEMY_LIST)==0):
+            return
+        time_to_spawn = ENEMY_LIST[0]['time']-self.deltaTime
+        if(time_to_spawn<=0):
+            self.enemies.append(ENEMY_LIST[0]['obj'])
+            del ENEMY_LIST[0]
+            print(self.enemies)
+        else:
+            ENEMY_LIST[0]['time'] = time_to_spawn
 
     def check_events(self):
         for event in pygame.event.get():
@@ -39,6 +57,8 @@ class GameManager:
     def draw(self):
         self.WIN.blit(self.BG_IMG, (0, 0))
         self.WIN.blit(self.SHIP.img, (self.SHIP.x, self.SHIP.y))
+        for enemy in self.enemies:
+            self.WIN.blit(enemy.img, (enemy.x, enemy.y))
         for bullet in self.ship_bullets:
             self.WIN.blit(bullet.img, (bullet.x, bullet.y))
         pygame.display.update()
@@ -61,6 +81,8 @@ class GameManager:
         clock = pygame.time.Clock()
         while self.run:
             clock.tick(self.FPS)
+            self.getDeltaTime()
+            self.spawnEnemies()
             self.key_manager()
             self.check_events()
             self.handle_bullets()
