@@ -50,6 +50,14 @@ class GameManager:
     def action(self):
         self.SHIP.action()
 
+    def shooting_handle(self):
+        for i, b in enumerate(self.SHIP.ship_bullets):
+            for j, e in enumerate(self.enemies):
+                if b.Rect.colliderect(e.Rect):
+                    del self.SHIP.ship_bullets[i]
+                    del self.enemies[j]
+
+
     def draw(self):
         self.WIN.blit(self.BG_IMG, (0, 0))
         self.WIN.blit(self.SHIP.img, (self.SHIP.x, self.SHIP.y))
@@ -82,6 +90,7 @@ class GameManager:
             self.key_manager()
             self.check_events()
             self.action()
+            self.shooting_handle()
             self.draw()
         pygame.quit()
 
