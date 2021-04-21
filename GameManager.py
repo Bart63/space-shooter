@@ -16,7 +16,7 @@ class GameManager:
     BULLET_IMG = os.path.join('imgs', 'bullet.png')
 
     def __init__(self):
-        self.SHIP = Ship(self.WIDTH/2, self.HEIGHT-80, self.SHIP_IMG_PATH, 2)
+        self.SHIP = Ship(self.WIDTH/2, self.HEIGHT-80, self.SHIP_IMG_PATH, 5)
         self.run = True
         self.ship_bullets = []
         self.enemies = []
@@ -27,7 +27,7 @@ class GameManager:
                 self.run = False
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
-                    bullet = Bullet(int(self.SHIP.x + self.SHIP.width/2), self.SHIP.y-10, self.BULLET_IMG, 3)
+                    bullet = Bullet(int(self.SHIP.x + self.SHIP.width/2), self.SHIP.y-10, self.BULLET_IMG, 6)
                     self.ship_bullets.append(bullet)
 
     def handle_bullets(self):
