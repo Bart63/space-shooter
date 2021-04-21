@@ -17,7 +17,7 @@ class GameManager:
     ENEMY_IMG_2 = os.path.join('imgs', 'enemy_new_2.png')
 
     def __init__(self):
-        self.SHIP = Ship(200, 200, self.SHIP_IMG_PATH, 2)
+        self.SHIP = Ship(self.WIDTH/2, self.HEIGHT-80, self.SHIP_IMG_PATH, 2)
         self.run = True
         self.ship_bullets = []
 
