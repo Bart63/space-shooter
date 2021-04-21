@@ -13,8 +13,6 @@ class GameManager:
     BG_IMG = pygame.image.load(os.path.join('imgs', 'background.png'))
     BG_IMG = pygame.transform.scale(BG_IMG, (WIDTH, HEIGHT))
     SHIP_IMG_PATH = os.path.join('imgs', 'gracz.png')
-    ENEMY_IMG_1 = os.path.join('imgs', 'enemy_new_1.png')
-    ENEMY_IMG_2 = os.path.join('imgs', 'enemy_new_2.png')
     BULLET_IMG = os.path.join('imgs', 'bullet.png')
 
     def __init__(self):
