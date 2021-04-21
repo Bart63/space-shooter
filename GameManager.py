@@ -35,7 +35,6 @@ class GameManager:
         if(time_to_spawn<=0):
             self.enemies.append(ENEMY_LIST[0]['obj'])
             del ENEMY_LIST[0]
-            print(self.enemies)
         else:
             ENEMY_LIST[0]['time'] = time_to_spawn
 
@@ -46,20 +45,17 @@ class GameManager:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
                     bullet = Bullet(int(self.SHIP.x + self.SHIP.width/2), self.SHIP.y-10, self.BULLET_IMG, 6)
-                    self.ship_bullets.append(bullet)
+                    self.SHIP.shoot(bullet)
 
-    def handle_bullets(self):
-        for i, bullet in enumerate(self.ship_bullets):
-            bullet.move(-1)
-            if(bullet.y+bullet.height<0):
-                del self.ship_bullets[i]
+    def action(self):
+        self.SHIP.action()
 
     def draw(self):
         self.WIN.blit(self.BG_IMG, (0, 0))
         self.WIN.blit(self.SHIP.img, (self.SHIP.x, self.SHIP.y))
         for enemy in self.enemies:
             self.WIN.blit(enemy.img, (enemy.x, enemy.y))
-        for bullet in self.ship_bullets:
+        for bullet in self.SHIP.ship_bullets:
             self.WIN.blit(bullet.img, (bullet.x, bullet.y))
         pygame.display.update()
 
@@ -85,7 +81,7 @@ class GameManager:
             self.spawnEnemies()
             self.key_manager()
             self.check_events()
-            self.handle_bullets()
+            self.action()
             self.draw()
         pygame.quit()
 

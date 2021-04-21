@@ -10,10 +10,12 @@ class Invaders:
         self.img=pygame.transform.scale(pygame.image.load(image), (width, height))
         self.width=width
         self.height=height
+        self.Rect = pygame.Rect(self.x, self.y, self.width, self.height)
     
     def move(self, right, down):
         self.x+=right*self.movement_speed
         self.y+=down*self.movement_speed
+        self.Rect = pygame.Rect(self.x, self.y, self.width, self.height)
 
     def loose_healt(self):
         pass

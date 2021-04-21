@@ -5,9 +5,9 @@ class Bullet(Weapon):
         super(Bullet, self).__init__(x, y, image, damage, width, height)
         self.speed=speed
 
-    def move(self, down, right=0):
-        self.x+=right*self.speed
-        self.y+=down*self.speed
+    def move(self, direction):
+        self.x+=direction[1]*self.speed
+        self.y+=direction[0]*self.speed
         
     def hit(self):
         pass
