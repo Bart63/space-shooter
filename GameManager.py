@@ -17,7 +17,7 @@ class GameManager:
     ENEMY_IMG_2 = os.path.join('imgs', 'enemy_new_2.png')
 
     def __init__(self):
-        self.SHIP = Ship(200, 200, self.SHIP_IMG_PATH)
+        self.SHIP = Ship(200, 200, self.SHIP_IMG_PATH, 2)
         self.run = True
         self.ship_bullets = []
 
@@ -47,13 +47,13 @@ class GameManager:
         keys_pressed = pygame.key.get_pressed()
 
         right, down = 0, 0
-        if keys_pressed[pygame.K_d] or keys_pressed[pygame.K_RIGHT]:
+        if (keys_pressed[pygame.K_d] or keys_pressed[pygame.K_RIGHT]) and self.SHIP.x<self.WIDTH-self.SHIP.width:
             right+=1
-        if keys_pressed[pygame.K_a] or keys_pressed[pygame.K_LEFT]:
+        if (keys_pressed[pygame.K_a] or keys_pressed[pygame.K_LEFT]) and self.SHIP.x>0:
             right-=1
-        if keys_pressed[pygame.K_s] or keys_pressed[pygame.K_DOWN]:
+        if (keys_pressed[pygame.K_s] or keys_pressed[pygame.K_DOWN]) and self.SHIP.y<self.HEIGHT-self.SHIP.height:
             down+=1
-        if keys_pressed[pygame.K_w] or keys_pressed[pygame.K_UP]:
+        if (keys_pressed[pygame.K_w] or keys_pressed[pygame.K_UP]) and self.SHIP.y>0:
             down-=1
         self.SHIP.move(right, down)
 
