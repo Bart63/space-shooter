@@ -1,6 +1,6 @@
 import os
 from Invaders import Ship
-from Invaders import Enemy
+from Weapons import Bullet
 import pygame
 
 RED = (255, 255, 0)
@@ -27,20 +27,20 @@ class GameManager:
                 self.run = False
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
-                    bullet = pygame.Rect(int(self.SHIP.x + self.SHIP.width/2), self.SHIP.y-10, 5, 5)
+                    bullet = Bullet(int(self.SHIP.x + self.SHIP.width/2), self.SHIP.y-10, self.ENEMY_IMG_1, 3)
                     self.ship_bullets.append(bullet)
 
     def handle_bullets(self):
         for i, bullet in enumerate(self.ship_bullets):
-            bullet.y -= 1
-            if(int(bullet.y-bullet.width/2)<0):
+            bullet.move(-1)
+            if(bullet.y+bullet.height<0):
                 del self.ship_bullets[i]
 
     def draw(self):
         self.WIN.blit(self.BG_IMG, (0, 0))
         self.WIN.blit(self.SHIP.img, (self.SHIP.x, self.SHIP.y))
         for bullet in self.ship_bullets:
-            pygame.draw.rect(self.WIN, RED, bullet)
+            self.WIN.blit(bullet.img, (bullet.x, bullet.y))
         pygame.display.update()
 
     def key_manager(self):
