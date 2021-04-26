@@ -53,16 +53,23 @@ class GameManager:
                     self.ship_bullets.append(self.SHIP.shoot(self.BULLET_IMG))
 
     def action(self):
-        for b in self.ship_bullets:
+        for i, b in enumerate(self.ship_bullets):
             b.move()
-        for b in self.enemy_bullets:
+            if b.y<0:
+                del self.ship_bullets[i]
+        for i, b in enumerate(self.enemy_bullets):
             b.move()
-        for e in self.enemies:
+            if b.y>self.HEIGHT:
+                del self.enemy_bullets[i]
+        for i, e in enumerate(self.enemies):
             e.action(self.deltaTime)
             if(e.time_to_shoot<=0):
                 self.enemy_bullets.append(e.shoot(self.BULLET_IMG))
                 e.time_to_shoot=random.randint(10, 100)*10
             e.move((self.WIDTH, self.HEIGHT))
+            if e.y>self.HEIGHT:
+                del self.enemies[i]
+
 
     def shooting_handle(self):
         for i, b in enumerate(self.ship_bullets):
@@ -70,6 +77,9 @@ class GameManager:
                 if b.Rect.colliderect(e.Rect):
                     del self.ship_bullets[i]
                     del self.enemies[j]
+        for i, b in enumerate(self.enemy_bullets):
+            if b.Rect.colliderect(self.SHIP.Rect):
+                del self.enemy_bullets[i]
 
     def draw(self):
         self.WIN.blit(self.BG_IMG, (0, 0))
