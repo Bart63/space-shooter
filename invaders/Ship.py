@@ -1,4 +1,5 @@
 from Invaders.Invaders import Invaders
+from Weapons import Bullet
 
 class Ship(Invaders):
 
@@ -8,17 +9,13 @@ class Ship(Invaders):
         self.shooting_speed=shooting_speed
         self.score=score
         self.shooting_dir=shooting_dir
-        self.ship_bullets = []
 
-    def shoot(self, bullet):
-        self.ship_bullets.append(bullet)
+    def shoot(self, bullet_img):
+        bullet = Bullet(int(self.x + self.width/2), self.y-10, bullet_img, direction=(-1, 0), speed=6)
+        return bullet
 
     def action(self):
-        self.move_bullets()
-
-    def move_bullets(self):
-        for b in self.ship_bullets:
-            b.move(self.shooting_dir)
+        pass
 
     def loose_healt(self):
         pass

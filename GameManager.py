@@ -21,6 +21,7 @@ class GameManager:
         self.SHIP = Ship(self.WIDTH/2, self.HEIGHT-80, self.SHIP_IMG_PATH, 5)
         self.run = True
         self.ship_bullets = []
+        self.enemy_bullets = []
         self.enemies = []
         self.previous_ticks = 0
         self.EnemyGenerator = EnemyGenerator(self.WIDTH)
@@ -49,24 +50,25 @@ class GameManager:
                 self.run = False
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
-                    bullet = Bullet(int(self.SHIP.x + self.SHIP.width/2), self.SHIP.y-10, self.BULLET_IMG, 6)
-                    self.SHIP.shoot(bullet)
+                    self.ship_bullets.append(self.SHIP.shoot(self.BULLET_IMG))
 
     def action(self):
-        self.SHIP.action()
+        for b in self.ship_bullets:
+            b.move()
+        for b in self.enemy_bullets:
+            b.move()
         for e in self.enemies:
-            if(e.time_to_shoot<=0):
-                bullet = Bullet(int(e.x + e.width/2), e.y+e.height+10, self.BULLET_IMG, 6)
-                e.shoot(bullet)
-                e.time_to_shoot=random.randint(10, 100)*10
             e.action(self.deltaTime)
+            if(e.time_to_shoot<=0):
+                self.enemy_bullets.append(e.shoot(self.BULLET_IMG))
+                e.time_to_shoot=random.randint(10, 100)*10
             e.move((self.WIDTH, self.HEIGHT))
 
     def shooting_handle(self):
-        for i, b in enumerate(self.SHIP.ship_bullets):
+        for i, b in enumerate(self.ship_bullets):
             for j, e in enumerate(self.enemies):
                 if b.Rect.colliderect(e.Rect):
-                    del self.SHIP.ship_bullets[i]
+                    del self.ship_bullets[i]
                     del self.enemies[j]
 
     def draw(self):
@@ -74,9 +76,9 @@ class GameManager:
         self.WIN.blit(self.SHIP.img, (self.SHIP.x, self.SHIP.y))
         for enemy in self.enemies:
             self.WIN.blit(enemy.img, (enemy.x, enemy.y))
-            for bullet in enemy.enemy_bullets:
-                self.WIN.blit(bullet.img, (bullet.x, bullet.y))
-        for bullet in self.SHIP.ship_bullets:
+        for bullet in self.enemy_bullets:
+            self.WIN.blit(bullet.img, (bullet.x, bullet.y))
+        for bullet in self.ship_bullets:
             self.WIN.blit(bullet.img, (bullet.x, bullet.y))
         pygame.display.update()
 
