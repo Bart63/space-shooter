@@ -76,7 +76,6 @@ class GameManager:
             if e.y>self.HEIGHT:
                 del self.enemies[i]
 
-
     def shooting_handle(self):
         for i, b in enumerate(self.ship_bullets):
             for j, e in enumerate(self.enemies):
@@ -88,6 +87,12 @@ class GameManager:
             if b.Rect.colliderect(self.SHIP.Rect):
                 self.SHIP.loose_healt(b.damage)
                 del self.enemy_bullets[i]
+
+    def ship_collision(self):
+        for i, e in enumerate(self.enemies):
+            if self.SHIP.Rect.colliderect(e.Rect):
+                self.SHIP.loose_healt(e.collision_damage)
+                del self.enemies[i]
 
     def draw(self):
         self.WIN.blit(self.BG_IMG, (0, 0))
@@ -130,6 +135,7 @@ class GameManager:
             self.check_events()
             self.action()
             self.shooting_handle()
+            self.ship_collision()
             self.draw()
         pygame.quit()
 
