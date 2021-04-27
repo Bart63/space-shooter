@@ -1,13 +1,11 @@
-import os
 from Invaders import Ship
 from Weapons import Bullet
 import pygame
 from EnemyList import EnemyGenerator
+from GlobalVars import BG_IMG_PATH, SHIP_IMG_PATH, WHITE, BULLET_IMG_PATH
 import random
 
 pygame.font.init()
-RED = (255, 255, 0)
-WHITE = (255, 255, 255)
 FONT = pygame.font.SysFont('comicsans', 40)
 
 class GameManager:
@@ -15,13 +13,11 @@ class GameManager:
     WIN = pygame.display.set_mode((WIDTH, HEIGHT))
     pygame.display.set_caption("Space shooter")
     FPS = 60
-    BG_IMG = pygame.image.load(os.path.join('imgs', 'background.png'))
+    BG_IMG = pygame.image.load(BG_IMG_PATH)
     BG_IMG = pygame.transform.scale(BG_IMG, (WIDTH, HEIGHT))
-    SHIP_IMG_PATH = os.path.join('imgs', 'gracz.png')
-    BULLET_IMG = os.path.join('imgs', 'bullet.png')
 
     def __init__(self):
-        self.SHIP = Ship(self.WIDTH/2, self.HEIGHT-80, self.SHIP_IMG_PATH, 5)
+        self.SHIP = Ship(self.WIDTH/2, self.HEIGHT-80, SHIP_IMG_PATH, 5)
         self.run = True
         self.ship_bullets = []
         self.enemy_bullets = []
@@ -53,7 +49,7 @@ class GameManager:
                 self.run = False
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
-                    self.ship_bullets.append(self.SHIP.shoot(self.BULLET_IMG))
+                    self.ship_bullets.append(self.SHIP.shoot(BULLET_IMG_PATH))
 
     def action(self):
         for i, b in enumerate(self.ship_bullets):
@@ -68,7 +64,7 @@ class GameManager:
             if hasattr(e, 'action'):
                 e.action(self.deltaTime)
                 if(e.time_to_shoot<=0):
-                    self.enemy_bullets.append(e.shoot(self.BULLET_IMG))
+                    self.enemy_bullets.append(e.shoot(BULLET_IMG_PATH))
                     e.time_to_shoot=random.randint(10, 100)*10
                 e.move((self.WIDTH, self.HEIGHT))
             else:
