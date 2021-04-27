@@ -2,11 +2,12 @@ from Invaders import Ship
 from Weapons import Bullet
 import pygame
 from EnemyList import EnemyGenerator
-from GlobalVars import BG_IMG_PATH, SHIP_IMG_PATH, WHITE, BULLET_IMG_PATH
+from GlobalVars import BG_IMG_PATH, SHIP_IMG_PATH, WHITE, BULLET_IMG_PATH, EXPLOSION_IMG_PATH
 import random
 
 pygame.font.init()
 FONT = pygame.font.SysFont('comicsans', 40)
+FONT_BIG = pygame.font.SysFont('comicsans', 100)
 
 class GameManager:
     WIDTH, HEIGHT = 700, 700
@@ -18,6 +19,7 @@ class GameManager:
 
     def __init__(self):
         self.SHIP = Ship(self.WIDTH/2, self.HEIGHT-80, SHIP_IMG_PATH, 5)
+        self.alive = True
         self.run = True
         self.ship_bullets = []
         self.enemy_bullets = []
@@ -47,7 +49,7 @@ class GameManager:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.run = False
-            if event.type == pygame.KEYDOWN:
+            if event.type == pygame.KEYDOWN and self.alive:
                 if event.key == pygame.K_SPACE:
                     self.ship_bullets.append(self.SHIP.shoot(BULLET_IMG_PATH))
 
@@ -90,13 +92,20 @@ class GameManager:
                 self.SHIP.loose_healt(e.collision_damage)
                 del self.enemies[i]
 
+    def is_ship_alive(self):
+        if self.SHIP.health <= 0:
+            self.alive = False
+
     def draw(self):
         self.WIN.blit(self.BG_IMG, (0, 0))
 
         health_text = FONT.render("Health: " + str(self.SHIP.health), 1, WHITE)
         score_text = FONT.render("Score: " + str(self.SHIP.score), 1, WHITE)
+        dead_text = "" if self.alive else FONT_BIG.render("You are dead", 1, WHITE)
         self.WIN.blit(health_text, (self.WIDTH-health_text.get_width()-10, 10))
         self.WIN.blit(score_text, (10, 10))
+        if dead_text:
+            self.WIN.blit(dead_text, (self.WIDTH/2-dead_text.get_width()/2, self.HEIGHT/2-dead_text.get_height()/2))
 
         self.WIN.blit(self.SHIP.img, (self.SHIP.x, self.SHIP.y))
         for enemy in self.enemies:
@@ -126,13 +135,15 @@ class GameManager:
         while self.run:
             clock.tick(self.FPS)
             self.getDeltaTime()
-            self.spawnEnemies()
-            self.key_manager()
             self.check_events()
             self.action()
-            self.shooting_handle()
-            self.ship_collision()
             self.draw()
+            if self.alive:
+                self.spawnEnemies()
+                self.key_manager()
+                self.shooting_handle()
+                self.ship_collision()
+                self.is_ship_alive()
         pygame.quit()
 
 if __name__ == "__main__":
