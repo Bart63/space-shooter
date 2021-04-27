@@ -97,6 +97,7 @@ class GameManager:
     def is_ship_alive(self):
         if self.SHIP.health <= 0:
             self.alive = False
+            self.SHIP.img=self.EXPLOSION_IMG
 
     def draw(self):
         self.WIN.blit(self.BG_IMG, (0, 0))
@@ -108,9 +109,8 @@ class GameManager:
         self.WIN.blit(score_text, (10, 10))
         if dead_text:
             self.WIN.blit(dead_text, (self.WIDTH/2-dead_text.get_width()/2, self.HEIGHT/2-dead_text.get_height()/2))
-            self.WIN.blit(self.EXPLOSION_IMG, (self.SHIP.x, self.SHIP.y))
-        else:
-            self.WIN.blit(self.SHIP.img, (self.SHIP.x, self.SHIP.y))
+
+        self.WIN.blit(self.SHIP.img, (self.SHIP.x, self.SHIP.y))
 
         for enemy in self.enemies:
             self.WIN.blit(enemy.img, (enemy.x, enemy.y))
