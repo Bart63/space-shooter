@@ -2,7 +2,7 @@ from Weapons.Weapon import Weapon
 import pygame 
 
 class Bullet(Weapon):
-    def __init__(self, x, y, image, direction=(0,1), speed=1, damage=1, width=5, height=5):
+    def __init__(self, x, y, image, direction=(0,1), speed=1, damage=10, width=5, height=5):
         super(Bullet, self).__init__(x, y, image, damage, width, height)
         self.speed = speed
         self.Rect = pygame.Rect(self.x, self.y, self.width, self.height)

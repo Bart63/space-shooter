@@ -5,7 +5,10 @@ import pygame
 from EnemyList import EnemyGenerator
 import random
 
+pygame.font.init()
 RED = (255, 255, 0)
+WHITE = (255, 255, 255)
+FONT = pygame.font.SysFont('comicsans', 40)
 
 class GameManager:
     WIDTH, HEIGHT = 700, 700
@@ -75,14 +78,22 @@ class GameManager:
         for i, b in enumerate(self.ship_bullets):
             for j, e in enumerate(self.enemies):
                 if b.Rect.colliderect(e.Rect):
+                    self.SHIP.get_score(e.score)
                     del self.ship_bullets[i]
                     del self.enemies[j]
         for i, b in enumerate(self.enemy_bullets):
             if b.Rect.colliderect(self.SHIP.Rect):
+                self.SHIP.loose_healt(b.damage)
                 del self.enemy_bullets[i]
 
     def draw(self):
         self.WIN.blit(self.BG_IMG, (0, 0))
+
+        health_text = FONT.render("Health: " + str(self.SHIP.health), 1, WHITE)
+        score_text = FONT.render("Score: " + str(self.SHIP.score), 1, WHITE)
+        self.WIN.blit(health_text, (self.WIDTH-health_text.get_width()-10, 10))
+        self.WIN.blit(score_text, (10, 10))
+
         self.WIN.blit(self.SHIP.img, (self.SHIP.x, self.SHIP.y))
         for enemy in self.enemies:
             self.WIN.blit(enemy.img, (enemy.x, enemy.y))

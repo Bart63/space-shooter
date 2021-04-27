@@ -14,11 +14,11 @@ class Ship(Invaders):
         bullet = Bullet(int(self.x + self.width/2), self.y-10, bullet_img, direction=(-1, 0), speed=6)
         return bullet
 
-    def action(self):
-        pass
+    def get_score(self, points):
+        self.score += points
 
-    def loose_healt(self):
-        pass
+    def loose_healt(self, damage):
+        self.health -= damage
 
     def die(self):
         pass
