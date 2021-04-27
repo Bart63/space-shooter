@@ -65,11 +65,14 @@ class GameManager:
             if b.y>self.HEIGHT:
                 del self.enemy_bullets[i]
         for i, e in enumerate(self.enemies):
-            e.action(self.deltaTime)
-            if(e.time_to_shoot<=0):
-                self.enemy_bullets.append(e.shoot(self.BULLET_IMG))
-                e.time_to_shoot=random.randint(10, 100)*10
-            e.move((self.WIDTH, self.HEIGHT))
+            if hasattr(e, 'action'):
+                e.action(self.deltaTime)
+                if(e.time_to_shoot<=0):
+                    self.enemy_bullets.append(e.shoot(self.BULLET_IMG))
+                    e.time_to_shoot=random.randint(10, 100)*10
+                e.move((self.WIDTH, self.HEIGHT))
+            else:
+                e.move()
             if e.y>self.HEIGHT:
                 del self.enemies[i]
 

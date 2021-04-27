@@ -1,4 +1,4 @@
-from Invaders import Shooter
+from Invaders import Shooter, Exploder
 import os
 import random
 
@@ -6,6 +6,8 @@ class EnemyGenerator():
     ENEMY_IMG_1 = os.path.join('imgs', 'enemy_new_1.png')
     ENEMY_IMG_2 = os.path.join('imgs', 'enemy_new_2.png')
     ENEMY_LIST = []
+    prob_fact = 10
+    iter=0
 
     def __init__(self, width, time_range=1000, enemies=5):
         self.x_range=width
@@ -22,7 +24,14 @@ class EnemyGenerator():
             time_left -= time
         
         for i in range(how_many_enemies):
-            self.ENEMY_LIST.append({
-                'obj' : Shooter(random.randrange(self.x_range), 0, self.ENEMY_IMG_1, width=56, height=40, right_dir=bool(random.getrandbits(1))),
-                'time' : times[i]
-            })
+            if(random.random()>(self.iter/(self.iter+self.prob_fact))):
+                self.ENEMY_LIST.append({
+                    'obj' : Shooter(random.randrange(self.x_range), 0, self.ENEMY_IMG_1, width=56, height=40, right_dir=bool(random.getrandbits(1))),
+                    'time' : times[i]
+                })
+            else:
+                self.ENEMY_LIST.append({
+                    'obj' : Exploder(random.randrange(self.x_range), 0, self.ENEMY_IMG_2, width=56, height=40),
+                    'time' : times[i]
+                })
+        self.iter+=1
