@@ -16,6 +16,8 @@ class GameManager:
     FPS = 60
     BG_IMG = pygame.image.load(BG_IMG_PATH)
     BG_IMG = pygame.transform.scale(BG_IMG, (WIDTH, HEIGHT))
+    EXPLOSION_IMG = pygame.image.load(EXPLOSION_IMG_PATH)
+    EXPLOSION_IMG = pygame.transform.scale(EXPLOSION_IMG, (69, 69))
 
     def __init__(self):
         self.SHIP = Ship(self.WIDTH/2, self.HEIGHT-80, SHIP_IMG_PATH, 5)
@@ -106,8 +108,10 @@ class GameManager:
         self.WIN.blit(score_text, (10, 10))
         if dead_text:
             self.WIN.blit(dead_text, (self.WIDTH/2-dead_text.get_width()/2, self.HEIGHT/2-dead_text.get_height()/2))
+            self.WIN.blit(self.EXPLOSION_IMG, (self.SHIP.x, self.SHIP.y))
+        else:
+            self.WIN.blit(self.SHIP.img, (self.SHIP.x, self.SHIP.y))
 
-        self.WIN.blit(self.SHIP.img, (self.SHIP.x, self.SHIP.y))
         for enemy in self.enemies:
             self.WIN.blit(enemy.img, (enemy.x, enemy.y))
         for bullet in self.enemy_bullets:
