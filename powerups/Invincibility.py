@@ -1,12 +1,12 @@
 from Powerups.PowerUps import PowerUps
 
 class Invincibility(PowerUps):
-    def __init__(self, is_active, duration):
-        super(Invincibility, self).__init__(is_active, duration)
+    def __init__(self, ship, duration=10, is_active=False):
+        super(Invincibility, self).__init__(ship, duration, is_active)
         
-    def activation(self, ship):
+    def activation(self):
         super().activation()
-        self.health = ship.health
+        self.health = self.ship.health
 
-    def action(self, ship):
-        ship.health = self.health
+    def action(self):
+        self.ship.health = self.health

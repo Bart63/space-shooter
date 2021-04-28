@@ -2,8 +2,8 @@ from Invaders import Ship
 from Weapons import Bullet
 import pygame
 from EnemyList import EnemyGenerator
-from GlobalVars import BG_IMG_PATH, SHIP_IMG_PATH, WHITE, BULLET_IMG_PATH, EXPLOSION_IMG_PATH
-import random
+from GlobalVars import BG_IMG_PATH, SHIP_IMG_PATH, WHITE, BULLET_IMG_PATH, EXPLOSION_IMG_PATH, powerups
+from random import randint, random
 
 pygame.font.init()
 FONT = pygame.font.SysFont('comicsans', 40)
@@ -38,7 +38,7 @@ class GameManager:
         ENEMY_LIST = self.EnemyGenerator.ENEMY_LIST
         if len(ENEMY_LIST)==0:
             if len(self.enemies)==0:
-                self.EnemyGenerator.populate_random()
+                self.EnemyGenerator.populate_next_wave()
             return
         time_to_spawn = ENEMY_LIST[0]['time']-self.deltaTime
         if(time_to_spawn<=0):
@@ -56,6 +56,7 @@ class GameManager:
                     self.ship_bullets.append(self.SHIP.shoot(BULLET_IMG_PATH))
 
     def action(self):
+        self.SHIP.action(self.deltaTime)
         for i, b in enumerate(self.ship_bullets):
             b.move()
             if b.y<0:
@@ -69,7 +70,7 @@ class GameManager:
                 e.action(self.deltaTime)
                 if(e.time_to_shoot<=0):
                     self.enemy_bullets.append(e.shoot(BULLET_IMG_PATH))
-                    e.time_to_shoot=random.randint(10, 100)*10
+                    e.time_to_shoot=randint(10, 100)*10
                 e.move((self.WIDTH, self.HEIGHT))
             else:
                 e.move()
@@ -83,6 +84,13 @@ class GameManager:
                     self.SHIP.get_score(e.score)
                     del self.ship_bullets[i]
                     del self.enemies[j]
+                    if random()>0.8:
+                        powerup = powerups[randint(0, len(powerups)-1)](self.SHIP)
+                        types = [type(p) for p in self.SHIP.powerups]
+                        if type(powerup) in types:
+                            k = types.index(type(powerup))
+                            self.SHIP.powerups[k].desactivation()
+                        self.SHIP.powerups.append(powerup)
         for i, b in enumerate(self.enemy_bullets):
             if b.Rect.colliderect(self.SHIP.Rect):
                 self.SHIP.loose_healt(b.damage)

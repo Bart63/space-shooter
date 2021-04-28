@@ -1,4 +1,11 @@
+from Powerups import FasterShip, HP, Invincibility
 import os
+
+fs = lambda ship: FasterShip(ship)
+hp = lambda ship: HP(ship)
+inv = lambda ship: Invincibility(ship)
+
+powerups = [fs, hp, inv]
 
 ENEMY_IMG_1_PATH = os.path.join('imgs', 'enemy_new_1.png')
 ENEMY_IMG_2_PATH = os.path.join('imgs', 'enemy_new_2.png')
