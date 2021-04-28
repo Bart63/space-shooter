@@ -14,7 +14,7 @@ class Ship(Invaders):
     def shoot(self, bullet_img):
         bullet = Bullet(int(self.x + self.width/2), self.y-10, bullet_img, direction=(-1, 0), speed=6)
         return bullet
-
+        
     def action(self, deltaTime):
         for i, p in enumerate(self.powerups):
             p.check_time(deltaTime)

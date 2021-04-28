@@ -1,11 +1,13 @@
-from Powerups import FasterShip, HP, Invincibility
+from Powerups import FasterShip, HP, Shield
 import os
+
+powers = [FasterShip, Shield, HP]
 
 fs = lambda ship: FasterShip(ship)
 hp = lambda ship: HP(ship)
-inv = lambda ship: Invincibility(ship)
+shi = lambda ship: Shield(ship)
 
-powerups = [fs, hp, inv]
+powerups = [fs, hp, shi]
 
 ENEMY_IMG_1_PATH = os.path.join('imgs', 'enemy_new_1.png')
 ENEMY_IMG_2_PATH = os.path.join('imgs', 'enemy_new_2.png')
@@ -13,7 +15,7 @@ SHIP_IMG_PATH = os.path.join('imgs', 'gracz.png')
 BULLET_IMG_PATH = os.path.join('imgs', 'bullet.png')
 BG_IMG_PATH = os.path.join('imgs', 'background.png')
 EXPLOSION_IMG_PATH = os.path.join('imgs', 'wybuch.png')
-SHIELD_IMG_PATH = os.path.join('imgs', 'wybuch.png')
-HP_IMG_PATH = os.path.join('imgs', 'wybuch.png')
+SHIELD_IMG_PATH = os.path.join('imgs', 'shield.png')
+HP_IMG_PATH = os.path.join('imgs', 'HP.png')
 RED = (255, 255, 0)
 WHITE = (255, 255, 255)

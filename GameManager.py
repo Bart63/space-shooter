@@ -2,12 +2,15 @@ from Invaders import Ship
 from Weapons import Bullet
 import pygame
 from EnemyList import EnemyGenerator
-from GlobalVars import BG_IMG_PATH, SHIP_IMG_PATH, WHITE, BULLET_IMG_PATH, EXPLOSION_IMG_PATH, powerups
+from GlobalVars import *
 from random import randint, random
 
 pygame.font.init()
 FONT = pygame.font.SysFont('comicsans', 40)
 FONT_BIG = pygame.font.SysFont('comicsans', 100)
+SHIP_PU=pygame.transform.scale(pygame.image.load(SHIP_IMG_PATH), (25, 25))
+SHIELD_PU=pygame.transform.scale(pygame.image.load(SHIELD_IMG_PATH), (25, 25))
+HP_PU=pygame.transform.scale(pygame.image.load(HP_IMG_PATH), (25, 25))
 
 class GameManager:
     WIDTH, HEIGHT = 700, 700
@@ -84,7 +87,7 @@ class GameManager:
                     self.SHIP.get_score(e.score)
                     del self.ship_bullets[i]
                     del self.enemies[j]
-                    if random()>0.8:
+                    if random()>0.9:
                         powerup = powerups[randint(0, len(powerups)-1)](self.SHIP)
                         types = [type(p) for p in self.SHIP.powerups]
                         if type(powerup) in types:
@@ -126,6 +129,14 @@ class GameManager:
             self.WIN.blit(bullet.img, (bullet.x, bullet.y))
         for bullet in self.ship_bullets:
             self.WIN.blit(bullet.img, (bullet.x, bullet.y))
+
+        for p in self.SHIP.powerups:
+            if powers.index(type(p))==0:
+                self.WIN.blit(SHIP_PU, (5, self.HEIGHT-30))
+            elif powers.index(type(p))==1:
+                self.WIN.blit(SHIELD_PU, (35, self.HEIGHT-30))
+            else:
+                self.WIN.blit(HP_PU, (65, self.HEIGHT-30))
         pygame.display.update()
 
     def key_manager(self):

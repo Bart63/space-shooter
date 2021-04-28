@@ -1,3 +1,3 @@
 from Powerups.FasterShip import FasterShip
-from Powerups.Invincibility import Invincibility
+from Powerups.Shield import Shield
 from Powerups.HP import HP
