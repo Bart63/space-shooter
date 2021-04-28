@@ -18,7 +18,7 @@ class Shooter(Enemy):
     def action(self, deltaTime):
         self.time_to_shoot-=deltaTime
 
-    def move(self, boundaries, down=1, right=1):
+    def move(self, boundaries, down=1, right=1): # Do Directions która rozumie granice planszy, rozumie poruszanie sie
         if self.x+self.width>=boundaries[0]:
             self.right_dir=False
         elif self.x<=0:

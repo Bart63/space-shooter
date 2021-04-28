@@ -5,5 +5,5 @@ class Enemy(Invaders):
         super(Enemy, self).__init__(x, y, image, movement_speed, collision_damage, health, width, height)
         self.score=score
 
-    def move(self, down, right=0):
+    def move(self, down, right=0): # (popatrz na kolejnosc argumentow), A na przyszlosc poruszanie sie
         super().move(self.movement_speed*right, down*self.movement_speed)

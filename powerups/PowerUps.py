@@ -3,6 +3,9 @@ class PowerUps:
         self.is_active = is_active
         self.duration = duration
 
+    def action(self, ship):
+        pass
+
     def check_time(self, delta_time):
         if self.is_active:
             self.duration -= delta_time

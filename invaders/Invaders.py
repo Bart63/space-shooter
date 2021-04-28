@@ -17,8 +17,8 @@ class Invaders:
         self.y+=down*self.movement_speed
         self.Rect = pygame.Rect(self.x, self.y, self.width, self.height)
 
-    def loose_healt(self):
-        pass
+    def loose_healt(self, damage):
+        self.health -= damage
 
     def colide(self):
         pass

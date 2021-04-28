@@ -17,8 +17,5 @@ class Ship(Invaders):
     def get_score(self, points):
         self.score += points
 
-    def loose_healt(self, damage):
-        self.health -= damage
-
     def die(self):
         pass
