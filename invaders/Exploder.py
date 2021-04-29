@@ -1,6 +1,5 @@
 from Invaders.Enemy import Enemy
 from GlobalVars import EXPLOSION_IMG_PATH
-import pygame
 
 movement_speed = 2
 
@@ -13,6 +12,6 @@ class Exploder(Enemy):
         super().move(down*self.movement_speed)
 
     def explode(self):
-        self.img=pygame.transform.scale(pygame.image.load(EXPLOSION_IMG_PATH), (self.width+5, self.height+10))
+        #self.img=pygame.transform.scale(pygame.image.load(EXPLOSION_IMG_PATH), (self.width+5, self.height+10))
         self.health -= 2
         self.movement_speed = 0.3

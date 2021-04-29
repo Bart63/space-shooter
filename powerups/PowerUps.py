@@ -12,7 +12,7 @@ class PowerUps:
             self.duration -= delta_time
             if self.duration <= 0:
                 self.desactivation()
-        elif self.duration>0:
+        elif self.duration > 0:
             self.is_active = True
             self.activation()
 

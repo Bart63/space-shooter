@@ -8,7 +8,7 @@ class EnemyGenerator():
     iter=0
 
     def __init__(self, width, time_range=1000, enemies=5):
-        self.x_range=width
+        self.x_range = width
         self.populate_next_wave(time_range, enemies)
 
     def populate_next_wave(self, max_time=5000, how_many_enemies=5):

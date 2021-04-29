@@ -1,5 +1,4 @@
 from Weapons.Weapon import Weapon
-import pygame 
 
 class Explosion(Weapon):
     def __init__(self, x, y, image, speed=1, damage=10, width=5, height=5):
