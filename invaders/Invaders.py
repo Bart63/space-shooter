@@ -19,3 +19,6 @@ class Invaders:
 
     def loose_healt(self, damage):
         self.health -= damage
+        
+    def is_colliding(self, obj) -> bool:
+        return obj.Rect.colliderect(self.Rect)

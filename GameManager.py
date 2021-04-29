@@ -61,11 +61,11 @@ class GameManager:
     def action(self):
         self.SHIP.action(self.deltaTime)
         for i, b in enumerate(self.ship_bullets):
-            b.move()
+            b.transform()
             if b.y<0:
                 del self.ship_bullets[i]
         for i, b in enumerate(self.enemy_bullets):
-            b.move()
+            b.transform()
             if b.y>self.HEIGHT:
                 del self.enemy_bullets[i]
         for i, e in enumerate(self.enemies):
@@ -83,7 +83,7 @@ class GameManager:
     def shooting_handle(self):
         for i, b in enumerate(self.ship_bullets):
             for j, e in enumerate(self.enemies):
-                if b.Rect.colliderect(e.Rect):
+                if e.is_colliding(b):
                     self.SHIP.get_score(e.score)
                     del self.ship_bullets[i]
                     if hasattr(e, 'explode'):
@@ -98,13 +98,13 @@ class GameManager:
                             self.SHIP.powerups[k].desactivation()
                         self.SHIP.powerups.append(powerup)
         for i, b in enumerate(self.enemy_bullets):
-            if b.Rect.colliderect(self.SHIP.Rect):
+            if self.SHIP.is_colliding(b):
                 self.SHIP.loose_healt(b.damage)
                 del self.enemy_bullets[i]
 
     def ship_collision(self):
         for i, e in enumerate(self.enemies):
-            if self.SHIP.Rect.colliderect(e.Rect):
+            if self.SHIP.is_colliding(e):
                 self.SHIP.loose_healt(e.collision_damage)
                 del self.enemies[i]
 
