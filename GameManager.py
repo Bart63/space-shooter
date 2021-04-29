@@ -86,7 +86,10 @@ class GameManager:
                 if b.Rect.colliderect(e.Rect):
                     self.SHIP.get_score(e.score)
                     del self.ship_bullets[i]
-                    del self.enemies[j]
+                    if hasattr(e, 'explode'):
+                        e.explode()
+                    else:
+                        del self.enemies[j]
                     if random()>0.9:
                         powerup = powerups[randint(0, len(powerups)-1)](self.SHIP)
                         types = [type(p) for p in self.SHIP.powerups]
