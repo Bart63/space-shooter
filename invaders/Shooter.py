@@ -9,7 +9,7 @@ class Shooter(Enemy):
         super(Shooter, self).__init__(x, y, image, score, movement_speed, damage, health, width, height, right, down, right_dir)
         self.shooting_speed = shooting_speed
         self.shooting_dir = shooting_dir
-        self.time_to_shoot = self.calc_rand_time()
+        self.time_to_shoot = self.next_time_shoot()
         
     def shoot(self):
         bullet = Bullet(int(self.x + self.width/2), self.y+10, direction=self.shooting_dir, speed=6)
