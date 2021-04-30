@@ -15,7 +15,7 @@ class Shooter(Enemy):
         bullet = Bullet(int(self.x + self.width/2), self.y+10, direction=self.shooting_dir, speed=6)
         return bullet
 
-    def calc_rand_time(self):
+    def next_time_shoot(self):
         return randint(10, 100)*10
 
     def action(self, deltaTime):
@@ -23,6 +23,6 @@ class Shooter(Enemy):
         if self.is_alive:
             self.time_to_shoot -= deltaTime
             if self.time_to_shoot <= 0:
-                self.time_to_shoot = self.calc_rand_time()
+                self.time_to_shoot = self.next_time_shoot()
                 return self.shoot()
         
