@@ -1,17 +1,18 @@
 from Invaders.Enemy import Enemy
-from GlobalVars import EXPLOSION_IMG_PATH
-
-movement_speed = 2
+from Weapons.Explosion import Explosion
+from GlobalVars import EXPLOSION_IMG_PATH, ENEMY_IMG_2_PATH, ENEMY_HEIGHT, ENEMY_WIDTH
 
 class Exploder(Enemy):
-    def __init__(self, x, y, image, movement_speed=1, collision_damage=20, health=100, 
-                    width=48, height=69):
-        super(Exploder, self).__init__(x, y, image, movement_speed, collision_damage, health, width, height)
+    def __init__(self, x, y, image=ENEMY_IMG_2_PATH, score=20, movement_speed=1, damage=15, health=1, 
+                    width=ENEMY_WIDTH, height=ENEMY_HEIGHT, right=0, down=1, right_dir=True):
+        super(Exploder, self).__init__(x, y, image, score, movement_speed, damage, health, width, height, 
+                                        right, down, right_dir)
 
-    def move(self, down=movement_speed):
-        super().move(down*self.movement_speed)
+    def action(self, deltaTime):
+        if not self.is_alive:
+            return self.explode()
+        super().action()
+        self.movement_speed += deltaTime/500
 
     def explode(self):
-        #self.img=pygame.transform.scale(pygame.image.load(EXPLOSION_IMG_PATH), (self.width+5, self.height+10))
-        self.health -= 2
-        self.movement_speed = 0.3
+        return Explosion(self.x, self.y, width=self.width, height=self.height)

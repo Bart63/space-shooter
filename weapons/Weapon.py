@@ -9,7 +9,7 @@ class Weapon:
         self.damage = damage
         self.width = width
         self.height = height
-        self.Rect = Rect(self.x, self.y, self.width, self.height)
+        self.Rect = Rect(x, y, width, height)
 
     def transform(self):
         self.Rect = Rect(self.x, self.y, self.width, self.height)

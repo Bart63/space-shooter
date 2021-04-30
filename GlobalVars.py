@@ -1,6 +1,8 @@
 from Powerups import FasterShip, HP, Shield
 from os import path
 
+WIDTH, HEIGHT = 700, 700
+FPS = 60
 
 fs = lambda ship: FasterShip(ship)
 hp = lambda ship: HP(ship)
@@ -19,3 +21,6 @@ SHIELD_IMG_PATH = path.join('imgs', 'shield.png')
 HP_IMG_PATH = path.join('imgs', 'HP.png')
 RED = (255, 255, 0)
 WHITE = (255, 255, 255)
+
+ENEMY_WIDTH, ENEMY_HEIGHT = 48, 69
+SHIP_WIDTH, SHIP_HEIGHT = 48, 69
