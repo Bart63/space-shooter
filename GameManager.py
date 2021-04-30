@@ -1,7 +1,7 @@
 from Invaders import Ship
 from Weapons import Bullet, Explosion
 import pygame
-from EnemyList import EnemyGenerator
+from EnemyGenerator import EnemyGenerator
 from GlobalVars import *
 
 pygame.font.init()
@@ -28,12 +28,12 @@ class GameManager:
         self.previous_ticks = 0
         self.EnemyGenerator = EnemyGenerator()
 
-    def getDeltaTime(self):
+    def get_delta_time(self):
         self.t = pygame.time.get_ticks()
         self.deltaTime = self.t-self.previous_ticks
         self.previous_ticks = self.t
 
-    def spawnEnemies(self):
+    def spawn_enemies(self):
         ENEMY_LIST = self.EnemyGenerator.ENEMY_LIST
         if len(ENEMY_LIST)==0:
             if len(self.enemies)==0:
@@ -135,10 +135,10 @@ class GameManager:
             self.quit_handle()
             self.draw()
             if self.SHIP.is_alive:
-                self.getDeltaTime()
+                self.get_delta_time()
                 self.weapons_handle()
                 self.action()
-                self.spawnEnemies()
+                self.spawn_enemies()
         pygame.quit()
 
 if __name__ == "__main__":
