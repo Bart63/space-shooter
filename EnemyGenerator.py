@@ -24,7 +24,7 @@ class EnemyGenerator():
         
         for i in range(how_many_enemies):
             enemy_chances = self.iter/(self.iter+self.prob_fact)
-            if(random()>enemy_chances): # x/(x+a)
+            if(random()>enemy_chances):
                 self.ENEMY_LIST.append({
                     'obj' : Shooter(randrange(self.x_range-ENEMY_WIDTH), 0, width=56, height=40, right_dir=bool(getrandbits(1))),
                     'time' : times[i]
