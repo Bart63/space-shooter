@@ -9,10 +9,14 @@ class Enemy(Invaders):
         self.right_dir = right_dir
 
     def move(self):
-        if self.x+self.width >= WIDTH:
+        if self.x+self.width >= WIDTH and self.right_dir:
+            self.right_dir = False
+        elif self.x <= 0 and not self.right_dir:
+            self.right_dir = True
+
+        change_to_right = self.right_dir and self.right<0
+        change_to_left = not self.right_dir and not self.right<0
+        if change_to_right or change_to_left:
             self.right = -self.right
-        elif self.x <= 0:
-            self.right = -self.right
-            
-        self.x += self.right*self.movement_speed
+
         super().move()
